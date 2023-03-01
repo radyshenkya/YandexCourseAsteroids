@@ -21,22 +21,20 @@ namespace CompositeRoot
         private LaserGun _laserGun;
         private BulletsSimulation _bulletsSimulation;
         private LaserGunRollback _laserGunRollback;
-        private int _health;
 
         public Ship Model => _shipModel;
         public BulletsSimulation Bullets => _bulletsSimulation;
         public float Speed => _shipInputRouter.Speed;
-        public int Health => _health;
         public LaserGun LaserGun => _laserGun;
         public LaserGunRollback LaserGunRollback => _laserGunRollback;
+        public int Health => _shipModel.Health;
 
         public override void Compose()
         {
-            _health = _startHealth;
             _baseGun = new DefaultGun();
             _laserGun = new LaserGun(10);
 
-            _shipModel = new Ship(new Vector2(0.5f, 0.5f), 0);
+            _shipModel = new Ship(new Vector2(0.5f, 0.5f), 0, _startHealth);
             _shipMovement = new ShipMovement(_shipModel);
             _shipInputRouter = new ShipInputRouter(_shipMovement)
                 .BindGunToFirstSlot(_baseGun)
@@ -55,7 +53,7 @@ namespace CompositeRoot
 
         public void DecreaseShipHealth()
         {
-            _health -= 1;
+            _shipModel.DecreaseHealth();
         }
 
         private void OnEnable()

@@ -5,7 +5,14 @@ namespace Asteroids.Model
 {
     public class Ship : Transformable
     {
-        public Ship(Vector2 position, float rotation) : base(position, rotation) { }
+        private int _health;
+
+        public int Health => _health;
+
+        public Ship(Vector2 position, float rotation, int health) : base(position, rotation)
+        {
+            _health = health;
+        }
 
         public void MoveLooped(Vector2 delta)
         {
@@ -15,6 +22,11 @@ namespace Asteroids.Model
             nextPosition.y = Mathf.Repeat(nextPosition.y, 1);
 
             Position = nextPosition;
+        }
+
+        public void DecreaseHealth()
+        {
+            _health -= 1;
         }
     }
 }
