@@ -22,21 +22,31 @@ namespace CompositeRoot
             _records = new CollisionsRecords(_shipRoot.Bullets, _enemiesRoot.Simulation);
             _router = new PhysicsRouter(_records.Values);
             _shipEventsBroadcaster.Init(_router, _shipRoot.Model);
-            
+
             StartCoroutine(GetRouterSteper());
         }
 
         private void OnEnable()
         {
-            _records.GameEnd += OnGameEnd;
+            _records.ShipDamage += OnShipDamage;
         }
 
         private void OnDisable()
         {
-            _records.GameEnd -= OnGameEnd;
+            _records.ShipDamage -= OnShipDamage;
         }
 
-        private void OnGameEnd()
+        private void OnShipDamage()
+        {
+            _shipRoot.DecreaseShipHealth();
+
+            if (_shipRoot.Health <= 0)
+            {
+                EndGame();
+            }
+        }
+
+        private void EndGame()
         {
             _shipRoot.DisableShip();
 

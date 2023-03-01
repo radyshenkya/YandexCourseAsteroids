@@ -12,6 +12,7 @@ namespace CompositeRoot
         [SerializeField] private TransformableView _transformableView;
         [SerializeField] private BulletsViewFactory _bulletsViewFactory;
         [SerializeField] private Camera _camera;
+        [SerializeField] private int _startHealth;
 
         private Ship _shipModel;
         private ShipInputRouter _shipInputRouter;
@@ -20,15 +21,18 @@ namespace CompositeRoot
         private LaserGun _laserGun;
         private BulletsSimulation _bulletsSimulation;
         private LaserGunRollback _laserGunRollback;
+        private int _health;
 
         public Ship Model => _shipModel;
         public BulletsSimulation Bullets => _bulletsSimulation;
         public float Speed => _shipInputRouter.Speed;
+        public int Health => _health;
         public LaserGun LaserGun => _laserGun;
         public LaserGunRollback LaserGunRollback => _laserGunRollback;
 
         public override void Compose()
         {
+            _health = _startHealth;
             _baseGun = new DefaultGun();
             _laserGun = new LaserGun(10);
 
@@ -49,6 +53,11 @@ namespace CompositeRoot
             _shipInputRouter.OnDisable();
         }
 
+        public void DecreaseShipHealth()
+        {
+            _health -= 1;
+        }
+
         private void OnEnable()
         {
             _shipInputRouter.OnEnable();
@@ -59,6 +68,7 @@ namespace CompositeRoot
             _bulletsSimulation.Start += _bulletsViewFactory.Create;
             _bulletsSimulation.End += _bulletsViewFactory.Destroy;
         }
+
 
         private void OnDisable()
         {

@@ -9,7 +9,7 @@ namespace Asteroids.Model
         private readonly BulletsSimulation _bullets;
         private readonly EnemiesSimulation _enemies;
 
-        public event Action GameEnd;
+        public event Action ShipDamage;
 
         public CollisionsRecords(BulletsSimulation bullets, EnemiesSimulation enemies)
         {
@@ -42,7 +42,7 @@ namespace Asteroids.Model
 
             yield return IfCollided((Ship ship, Enemy enemy) =>
             {
-                GameEnd?.Invoke();
+                ShipDamage?.Invoke();
             });
         }
 
