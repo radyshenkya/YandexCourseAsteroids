@@ -27,7 +27,6 @@ namespace CompositeRoot
         public float Speed => _shipInputRouter.Speed;
         public LaserGun LaserGun => _laserGun;
         public LaserGunRollback LaserGunRollback => _laserGunRollback;
-        public int Health => _shipModel.Health;
 
         public override void Compose()
         {
@@ -49,11 +48,6 @@ namespace CompositeRoot
         public void DisableShip()
         {
             _shipInputRouter.OnDisable();
-        }
-
-        public void DecreaseShipHealth()
-        {
-            _shipModel.DecreaseHealth();
         }
 
         private void OnEnable()

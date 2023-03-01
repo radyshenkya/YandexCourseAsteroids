@@ -38,9 +38,9 @@ namespace CompositeRoot
 
         private void OnShipDamage()
         {
-            _shipRoot.DecreaseShipHealth();
+            _shipRoot.Model.DecreaseHealth();
 
-            if (_shipRoot.Health <= 0)
+            if (_shipRoot.Model.Health <= 0)
             {
                 EndGame();
             }
